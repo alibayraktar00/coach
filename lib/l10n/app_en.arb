@@ -1,0 +1,29 @@
+{
+  "appTitle": "Coach",
+  "listening": "Listening...",
+  "confidence": "Confidence: {value}%",
+  "@confidence": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "done": "Done",
+  "eventAdded": "Event added: {title}",
+  "@eventAdded": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "noEventsToday": "No events for today.",
+  "write": "Write",
+  "voice": "Voice",
+  "note": "Note",
+  "settings": "Settings",
+  "language": "Language",
+  "turkish": "Turkish",
+  "english": "English"
+}

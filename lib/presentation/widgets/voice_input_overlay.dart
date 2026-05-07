@@ -5,25 +5,29 @@ import 'dart:developer' as dev;
 import '../../core/theme/app_theme.dart';
 import '../../core/utils/glass_morphism.dart';
 import '../../core/utils/nlp_parser.dart';
+import '../../core/utils/locale_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../l10n/app_localizations.dart';
 
-class VoiceInputOverlay extends StatefulWidget {
+class VoiceInputOverlay extends ConsumerStatefulWidget {
   final Function(String title, DateTime dateTime) onResult;
 
   const VoiceInputOverlay({super.key, required this.onResult});
 
   @override
-  State<VoiceInputOverlay> createState() => _VoiceInputOverlayState();
+  ConsumerState<VoiceInputOverlay> createState() => _VoiceInputOverlayState();
 }
 
-class _VoiceInputOverlayState extends State<VoiceInputOverlay> {
+class _VoiceInputOverlayState extends ConsumerState<VoiceInputOverlay> {
   final stt.SpeechToText _speech = stt.SpeechToText();
   bool _isListening = false;
-  String _text = 'Dinliyorum...';
+  String _text = '';
   double _confidence = 1.0;
 
   @override
   void initState() {
     super.initState();
+    _text = ''; // Will be initialized in build if empty, or just kept empty
     _startListening();
   }
 
@@ -34,6 +38,9 @@ class _VoiceInputOverlayState extends State<VoiceInputOverlay> {
     );
     if (available) {
       setState(() => _isListening = true);
+      final currentLocale = ref.read(localeProvider);
+      final localeId = currentLocale.languageCode == 'tr' ? 'tr_TR' : 'en_US';
+      
       _speech.listen(
         onResult: (val) => setState(() {
           _text = val.recognizedWords;
@@ -41,7 +48,7 @@ class _VoiceInputOverlayState extends State<VoiceInputOverlay> {
             _confidence = val.confidence;
           }
         }),
-        localeId: 'tr_TR',
+        localeId: localeId,
       );
     }
   }
@@ -60,6 +67,7 @@ class _VoiceInputOverlayState extends State<VoiceInputOverlay> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Material(
       color: Colors.transparent,
       child: Center(
@@ -80,13 +88,13 @@ class _VoiceInputOverlayState extends State<VoiceInputOverlay> {
                     if (_isListening) ...[
                       const SizedBox(height: 8),
                       Text(
-                        'Doğruluk: ${(_confidence * 100).toStringAsFixed(0)}%',
+                        l10n.confidence((_confidence * 100).toStringAsFixed(0)),
                         style: const TextStyle(fontSize: 12, color: Colors.white38),
                       ),
                     ],
                     const SizedBox(height: 24),
                     Text(
-                      _text,
+                      _text.isEmpty ? l10n.listening : _text,
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 18, color: Colors.white),
                     ),
@@ -97,7 +105,7 @@ class _VoiceInputOverlayState extends State<VoiceInputOverlay> {
                         backgroundColor: AntigravityTheme.primary,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       ),
-                      child: const Text('Bitti', style: TextStyle(color: Colors.white)),
+                      child: Text(l10n.done, style: const TextStyle(color: Colors.white)),
                     ),
                   ],
                 ),

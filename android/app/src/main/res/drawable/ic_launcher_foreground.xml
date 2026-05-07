@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Soft glow blob (indigo -> pink) -->
+    <path
+        android:fillColor="#336366F1"
+        android:pathData="M54,18c17.7,0 32,14.3 32,32s-14.3,32 -32,32S22,67.7 22,50s14.3,-32 32,-32z" />
+    <path
+        android:fillColor="#26EC4899"
+        android:pathData="M70,36c10.5,0 19,8.5 19,19s-8.5,19 -19,19s-19,-8.5 -19,-19s8.5,-19 19,-19z" />
+
+    <!-- Calendar card -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M33,30c0,-3.3 2.7,-6 6,-6h30c3.3,0 6,2.7 6,6v40c0,3.3 -2.7,6 -6,6H39c-3.3,0 -6,-2.7 -6,-6V30z" />
+
+    <!-- Calendar top bar -->
+    <path
+        android:fillColor="#FF6366F1"
+        android:pathData="M33,30c0,-3.3 2.7,-6 6,-6h30c3.3,0 6,2.7 6,6v8H33v-8z" />
+
+    <!-- Binding rings -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M44,22c1.7,0 3,1.3 3,3v6c0,1.7 -1.3,3 -3,3s-3,-1.3 -3,-3v-6c0,-1.7 1.3,-3 3,-3z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M64,22c1.7,0 3,1.3 3,3v6c0,1.7 -1.3,3 -3,3s-3,-1.3 -3,-3v-6c0,-1.7 1.3,-3 3,-3z" />
+
+    <!-- Stylized "C" mark inside calendar -->
+    <path
+        android:fillColor="#FF0F172A"
+        android:pathData="M62.5,47.5c-1.5,-1.8 -3.7,-2.8 -6.5,-2.8c-5.1,0 -8.7,3.5 -8.7,9.1c0,5.6 3.6,9.1 8.7,9.1c2.8,0 5,-1 6.6,-2.9c0.5,-0.6 0.4,-1.6 -0.3,-2.1l-2.1,-1.5c-0.6,-0.4 -1.4,-0.3 -1.9,0.2c-0.7,0.8 -1.7,1.3 -2.9,1.3c-2.7,0 -4.5,-1.9 -4.5,-4.1c0,-2.2 1.8,-4.1 4.5,-4.1c1.2,0 2.2,0.5 2.9,1.3c0.5,0.5 1.3,0.6 1.9,0.2l2.1,-1.5c0.7,-0.5 0.8,-1.5 0.3,-2.1z" />
+
+    <!-- Tiny mic dot (voice cue) -->
+    <path
+        android:fillColor="#FFEC4899"
+        android:pathData="M71.5,69.5m-4.5,0a4.5,4.5 0 1,0 9,0a4.5,4.5 0 1,0 -9,0" />
+</vector>
+

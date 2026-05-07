@@ -53,4 +53,32 @@ class AntigravityTheme {
       ),
     );
   }
+
+  static ThemeData get lightTheme {
+    final base = ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light,
+      scaffoldBackgroundColor: const Color(0xFFF7F8FC),
+      colorScheme: const ColorScheme.light(
+        primary: primary,
+        secondary: secondary,
+        surface: Colors.white,
+        onSurface: Color(0xFF0F172A),
+      ),
+    );
+
+    return base.copyWith(
+      textTheme: GoogleFonts.outfitTextTheme(base.textTheme).copyWith(
+        displayLarge: GoogleFonts.outfit(
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xFF0F172A),
+        ),
+        bodyLarge: GoogleFonts.outfit(
+          fontSize: 16,
+          color: const Color(0xFF0F172A),
+        ),
+      ),
+    );
+  }
 }

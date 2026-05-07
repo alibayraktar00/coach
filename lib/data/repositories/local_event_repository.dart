@@ -15,7 +15,12 @@ class LocalEventRepository {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(
+      path,
+      version: 4,
+      onCreate: _createDB,
+      onUpgrade: _upgradeDB,
+    );
   }
 
   Future _createDB(Database db, int version) async {
@@ -26,9 +31,30 @@ class LocalEventRepository {
         description TEXT,
         date_time TEXT NOT NULL,
         audio_url TEXT,
-        is_reminder_enabled INTEGER NOT NULL
+        is_reminder_enabled INTEGER NOT NULL,
+        reminder_minutes_before INTEGER,
+        color_value INTEGER,
+        tag TEXT,
+        recurrence_type TEXT,
+        recurrence_interval INTEGER,
+        recurrence_until TEXT
       )
     ''');
+  }
+
+  Future<void> _upgradeDB(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute('ALTER TABLE events ADD COLUMN color_value INTEGER;');
+      await db.execute('ALTER TABLE events ADD COLUMN tag TEXT;');
+    }
+    if (oldVersion < 3) {
+      await db.execute('ALTER TABLE events ADD COLUMN recurrence_type TEXT;');
+      await db.execute('ALTER TABLE events ADD COLUMN recurrence_interval INTEGER;');
+      await db.execute('ALTER TABLE events ADD COLUMN recurrence_until TEXT;');
+    }
+    if (oldVersion < 4) {
+      await db.execute('ALTER TABLE events ADD COLUMN reminder_minutes_before INTEGER;');
+    }
   }
 
   Future<void> insertEvent(EventModel event) async {

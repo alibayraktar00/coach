@@ -1,0 +1,29 @@
+{
+  "appTitle": "Coach",
+  "listening": "Dinliyorum...",
+  "confidence": "Doğruluk: {value}%",
+  "@confidence": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "done": "Bitti",
+  "eventAdded": "Etkinlik eklendi: {title}",
+  "@eventAdded": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "noEventsToday": "Bu gün için etkinlik yok.",
+  "write": "Yaz",
+  "voice": "Ses",
+  "note": "Not",
+  "settings": "Ayarlar",
+  "language": "Dil",
+  "turkish": "Türkçe",
+  "english": "İngilizce"
+}
