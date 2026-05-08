@@ -10,6 +10,7 @@
     }
   },
   "done": "Done",
+  "newEvent": "New Event",
   "eventAdded": "Event added: {title}",
   "@eventAdded": {
     "placeholders": {
@@ -25,5 +26,15 @@
   "settings": "Settings",
   "language": "Language",
   "turkish": "Turkish",
-  "english": "English"
+  "english": "English",
+  "theme": "Theme",
+  "light": "Light",
+  "dark": "Dark",
+  "system": "System",
+  "profile": "Profile",
+  "name": "Name",
+  "email": "Email",
+  "weight": "Weight",
+  "height": "Height",
+  "goal": "Goal"
 }

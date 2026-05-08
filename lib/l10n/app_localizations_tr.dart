@@ -23,6 +23,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get done => 'Bitti';
 
   @override
+  String get newEvent => 'Yeni Etkinlik';
+
+  @override
   String eventAdded(String title) {
     return 'Etkinlik eklendi: $title';
   }
@@ -50,4 +53,34 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get english => 'İngilizce';
+
+  @override
+  String get theme => 'Tema';
+
+  @override
+  String get light => 'Açık';
+
+  @override
+  String get dark => 'Koyu';
+
+  @override
+  String get system => 'Sistem';
+
+  @override
+  String get profile => 'Profil';
+
+  @override
+  String get name => 'İsim';
+
+  @override
+  String get email => 'E-posta';
+
+  @override
+  String get weight => 'Kilo';
+
+  @override
+  String get height => 'Boy';
+
+  @override
+  String get goal => 'Hedef';
 }

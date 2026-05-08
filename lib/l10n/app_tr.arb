@@ -10,6 +10,7 @@
     }
   },
   "done": "Bitti",
+  "newEvent": "Yeni Etkinlik",
   "eventAdded": "Etkinlik eklendi: {title}",
   "@eventAdded": {
     "placeholders": {
@@ -25,5 +26,15 @@
   "settings": "Ayarlar",
   "language": "Dil",
   "turkish": "Türkçe",
-  "english": "İngilizce"
+  "english": "İngilizce",
+  "theme": "Tema",
+  "light": "Açık",
+  "dark": "Koyu",
+  "system": "Sistem",
+  "profile": "Profil",
+  "name": "İsim",
+  "email": "E-posta",
+  "weight": "Kilo",
+  "height": "Boy",
+  "goal": "Hedef"
 }

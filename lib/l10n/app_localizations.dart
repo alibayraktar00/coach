@@ -122,6 +122,12 @@ abstract class AppLocalizations {
   /// **'Done'**
   String get done;
 
+  /// No description provided for @newEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'New Event'**
+  String get newEvent;
+
   /// No description provided for @eventAdded.
   ///
   /// In en, this message translates to:
@@ -175,6 +181,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'English'**
   String get english;
+
+  /// No description provided for @theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// No description provided for @light.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get light;
+
+  /// No description provided for @dark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get dark;
+
+  /// No description provided for @system.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get system;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get weight;
+
+  /// No description provided for @height.
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get height;
+
+  /// No description provided for @goal.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal'**
+  String get goal;
 }
 
 class _AppLocalizationsDelegate
