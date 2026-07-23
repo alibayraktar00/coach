@@ -58,7 +58,7 @@ final filteredEventsProvider = Provider<List<EventModel>>((ref) {
         ..sort((a, b) => a.dateTime.compareTo(b.dateTime));
     },
     loading: () => [],
-    error: (_, __) => [],
+    error: (e, st) => [],
   );
 });
 

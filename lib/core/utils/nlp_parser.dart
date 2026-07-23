@@ -33,7 +33,7 @@ class NLPParser {
     // 4: buçuk
     // 5: period after
     final timeRegex = RegExp(
-      r'(sabah|öğle|akşam|gece|öğleden sonra)?\s*(?:saat\s+)?(\d{1,2})(?:[:.](\d{1,2}))?\s*(?:[''"]?\s*(?:de|da|te|ta))?\s*(buçuk)?\s*(?:[''"]?\s*(?:de|da|te|ta))?\s*(pm|am|öğleden sonra|akşam|gece)?',
+      '(sabah|öğle|akşam|gece|öğleden sonra)?\\s*(?:saat\\s+)?(\\d{1,2})(?:[:.](\\d{1,2}))?\\s*(?:[\'"]?\\s*(?:de|da|te|ta))?\\s*(buçuk)?\\s*(?:[\'"]?\\s*(?:de|da|te|ta))?\\s*(pm|am|öğleden sonra|akşam|gece)?',
       caseSensitive: false
     );
     
