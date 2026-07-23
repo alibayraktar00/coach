@@ -108,9 +108,9 @@ class _EventEditorSheetState extends ConsumerState<EventEditorSheet> {
                 if (!isNew)
                   IconButton(
                     onPressed: () async {
+                      final navigator = Navigator.of(context);
                       await ref.read(eventsProvider.notifier).deleteEvent(widget.event.id);
-                      if (!mounted) return;
-                      Navigator.of(context).pop(true);
+                      navigator.pop(true);
                     },
                     icon: const Icon(LucideIcons.trash2, color: Colors.redAccent),
                   ),
@@ -154,7 +154,7 @@ class _EventEditorSheetState extends ConsumerState<EventEditorSheet> {
             ),
             const SizedBox(height: 10),
             DropdownButtonFormField<String>(
-              value: _recurrenceType,
+              initialValue: _recurrenceType,
               dropdownColor: const Color(0xFF1A1A2E),
               style: const TextStyle(color: Colors.white),
               decoration: const InputDecoration(
@@ -186,7 +186,7 @@ class _EventEditorSheetState extends ConsumerState<EventEditorSheet> {
                 SizedBox(
                   width: 140,
                   child: DropdownButtonFormField<int>(
-                    value: _reminderMinutes,
+                    initialValue: _reminderMinutes,
                     dropdownColor: const Color(0xFF1A1A2E),
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
@@ -262,6 +262,7 @@ class _EventEditorSheetState extends ConsumerState<EventEditorSheet> {
             const SizedBox(height: 14),
             ElevatedButton(
               onPressed: () async {
+                final navigator = Navigator.of(context);
                 final updated = EventModel(
                   id: widget.event.id,
                   title: _titleController.text.trim().isEmpty ? widget.event.title : _titleController.text.trim(),
@@ -290,8 +291,7 @@ class _EventEditorSheetState extends ConsumerState<EventEditorSheet> {
                   await NotificationService.instance.cancelEventReminder(updated.id);
                 }
                 
-                if (!mounted) return;
-                Navigator.of(context).pop(true);
+                navigator.pop(true);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AntigravityTheme.primary,
