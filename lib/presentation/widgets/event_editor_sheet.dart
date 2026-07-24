@@ -21,9 +21,11 @@ class _EventEditorSheetState extends ConsumerState<EventEditorSheet> {
   late TextEditingController _titleController;
   late TextEditingController _descController;
   late TextEditingController _tagController;
+  late TextEditingController _intervalController;
   late DateTime _selectedDate;
   int? _colorValue;
   late String _recurrenceType;
+  DateTime? _recurrenceUntil;
   late bool _reminderEnabled;
   late int _reminderMinutes;
 
@@ -33,9 +35,11 @@ class _EventEditorSheetState extends ConsumerState<EventEditorSheet> {
     _titleController = TextEditingController(text: widget.event.title);
     _descController = TextEditingController(text: widget.event.description ?? '');
     _tagController = TextEditingController(text: widget.event.tag ?? '');
+    _intervalController = TextEditingController(text: '${widget.event.recurrenceInterval ?? 1}');
     _selectedDate = widget.event.dateTime;
     _colorValue = widget.event.colorValue;
     _recurrenceType = widget.event.recurrenceType ?? 'none';
+    _recurrenceUntil = widget.event.recurrenceUntil;
     _reminderEnabled = widget.event.isReminderEnabled;
     _reminderMinutes = widget.event.reminderMinutesBefore ?? 10;
   }
@@ -45,7 +49,45 @@ class _EventEditorSheetState extends ConsumerState<EventEditorSheet> {
     _titleController.dispose();
     _descController.dispose();
     _tagController.dispose();
+    _intervalController.dispose();
     super.dispose();
+  }
+
+  /// Unit shown next to the repeat interval, e.g. "every 2 weeks".
+  String get _recurrenceUnit {
+    switch (_recurrenceType) {
+      case 'daily':
+        return 'days';
+      case 'weekly':
+        return 'weeks';
+      case 'monthly':
+        return 'months';
+      case 'yearly':
+        return 'years';
+      default:
+        return '';
+    }
+  }
+
+  /// The expansion logic clamps to 1..365, so keep the stored value in range.
+  int get _recurrenceInterval =>
+      (int.tryParse(_intervalController.text.trim()) ?? 1).clamp(1, 365);
+
+  Future<void> _pickRecurrenceUntil() async {
+    final current = _recurrenceUntil;
+    final initial = (current != null && !current.isBefore(_selectedDate)) ? current : _selectedDate;
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: initial,
+      firstDate: _selectedDate,
+      lastDate: DateTime(2100),
+    );
+    if (picked == null) return;
+    if (!mounted) return;
+    // End of day so the final occurrence is included.
+    setState(() {
+      _recurrenceUntil = DateTime(picked.year, picked.month, picked.day, 23, 59, 59);
+    });
   }
 
   Future<void> _pickDateTime() async {
@@ -171,6 +213,50 @@ class _EventEditorSheetState extends ConsumerState<EventEditorSheet> {
               ],
               onChanged: (v) => setState(() => _recurrenceType = v ?? 'none'),
             ),
+            if (_recurrenceType != 'none') ...[
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 96,
+                    child: TextField(
+                      controller: _intervalController,
+                      keyboardType: TextInputType.number,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
+                        labelText: 'Every',
+                        labelStyle: TextStyle(color: Colors.white70),
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Text(_recurrenceUnit, style: const TextStyle(color: Colors.white70)),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: _pickRecurrenceUntil,
+                      icon: const Icon(LucideIcons.calendarOff, color: Colors.white70),
+                      label: Text(
+                        _recurrenceUntil == null
+                            ? 'No end date'
+                            : 'Until ${_recurrenceUntil!.day}/${_recurrenceUntil!.month}/${_recurrenceUntil!.year}',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  if (_recurrenceUntil != null)
+                    IconButton(
+                      onPressed: () => setState(() => _recurrenceUntil = null),
+                      icon: const Icon(LucideIcons.x, color: Colors.white70),
+                    ),
+                ],
+              ),
+            ],
             const SizedBox(height: 10),
             Row(
               children: [
@@ -274,8 +360,8 @@ class _EventEditorSheetState extends ConsumerState<EventEditorSheet> {
                   colorValue: _colorValue,
                   tag: _tagController.text.trim().isEmpty ? null : _tagController.text.trim(),
                   recurrenceType: _recurrenceType == 'none' ? null : _recurrenceType,
-                  recurrenceInterval: _recurrenceType == 'none' ? null : 1,
-                  recurrenceUntil: null,
+                  recurrenceInterval: _recurrenceType == 'none' ? null : _recurrenceInterval,
+                  recurrenceUntil: _recurrenceType == 'none' ? null : _recurrenceUntil,
                 );
                 
                 await ref.read(eventsProvider.notifier).updateEvent(updated);
