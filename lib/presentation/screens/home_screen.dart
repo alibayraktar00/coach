@@ -191,8 +191,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final l10n = AppLocalizations.of(context)!;
     final selectedDay = ref.watch(selectedDayProvider);
     final filteredEvents = ref.watch(filteredEventsProvider);
-    final tags = ref.watch(availableTagsProvider);
     final tagFilter = ref.watch(tagFilterProvider);
+
+    // While searching, look across all days instead of only the selected one.
+    final isSearching = _searchOpen && ref.watch(searchQueryProvider).trim().isNotEmpty;
+    final searchResults = ref.watch(globalSearchResultsProvider);
+    final tags = ref.watch(_searchOpen ? allTagsProvider : availableTagsProvider);
+    final visibleEvents = isSearching ? searchResults : filteredEvents;
 
     return Scaffold(
       body: Stack(
@@ -226,6 +231,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           _searchOpen = !_searchOpen;
                           if (!_searchOpen) {
                             ref.read(searchQueryProvider.notifier).state = '';
+                            ref.read(tagFilterProvider.notifier).state = null;
                           }
                         }),
                       ),
@@ -293,28 +299,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      '${selectedDay.day}/${selectedDay.month}/${selectedDay.year}',
+                      isSearching
+                          ? '${searchResults.length} results'
+                          : '${selectedDay.day}/${selectedDay.month}/${selectedDay.year}',
                       style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white),
                     ),
                   ),
                   const SizedBox(height: 10),
                   Expanded(
-                    child: filteredEvents.isEmpty
+                    child: visibleEvents.isEmpty
                         ? GlassContainer(
                             padding: const EdgeInsets.all(18),
                             child: Center(
                               child: Text(
-                                l10n.noEventsToday,
+                                isSearching ? 'No matching events' : l10n.noEventsToday,
                                 style: TextStyle(color: Colors.white.withAlpha((255 * 0.7).toInt())),
                               ),
                             ),
                           )
                         : ListView.builder(
                             padding: EdgeInsets.zero,
-                            itemCount: filteredEvents.length,
+                            itemCount: visibleEvents.length,
                             itemBuilder: (context, index) => EventCard(
-                              event: filteredEvents[index],
-                              onTap: () => _openEventEditor(filteredEvents[index]),
+                              event: visibleEvents[index],
+                              onTap: () => _openEventEditor(visibleEvents[index]),
                             ),
                           ),
                   ),

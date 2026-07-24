@@ -62,6 +62,42 @@ final filteredEventsProvider = Provider<List<EventModel>>((ref) {
   );
 });
 
+/// Searches every stored event instead of only the selected day.
+/// Returns the base events (not per-day occurrences) so a match is listed once.
+/// An empty query yields an empty list — the caller falls back to the day view.
+final globalSearchResultsProvider = Provider<List<EventModel>>((ref) {
+  final eventsAsync = ref.watch(eventsProvider);
+  final query = ref.watch(searchQueryProvider).trim().toLowerCase();
+  final tagFilter = ref.watch(tagFilterProvider);
+
+  if (query.isEmpty) return [];
+
+  return eventsAsync.maybeWhen(
+    data: (events) => events.where((e) {
+      if (tagFilter != null && e.tag != tagFilter) return false;
+      final haystack = '${e.title} ${e.description ?? ''} ${e.tag ?? ''}'.toLowerCase();
+      return haystack.contains(query);
+    }).toList()
+      ..sort((a, b) => a.dateTime.compareTo(b.dateTime)),
+    orElse: () => [],
+  );
+});
+
+/// Tags across all events, for filtering while searching globally.
+final allTagsProvider = Provider<List<String>>((ref) {
+  final eventsAsync = ref.watch(eventsProvider);
+
+  return eventsAsync.maybeWhen(
+    data: (events) => events
+        .map((e) => e.tag)
+        .whereType<String>()
+        .toSet()
+        .toList()
+      ..sort(),
+    orElse: () => [],
+  );
+});
+
 final availableTagsProvider = Provider<List<String>>((ref) {
   final eventsAsync = ref.watch(eventsProvider);
   final selectedDay = ref.watch(selectedDayProvider);
