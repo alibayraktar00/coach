@@ -366,16 +366,7 @@ class _EventEditorSheetState extends ConsumerState<EventEditorSheet> {
                 
                 await ref.read(eventsProvider.notifier).updateEvent(updated);
                 
-                if (_reminderEnabled) {
-                  await NotificationService.instance.scheduleEventReminder(
-                    eventId: updated.id,
-                    title: updated.title,
-                    eventDateTime: updated.dateTime,
-                    minutesBefore: _reminderMinutes,
-                  );
-                } else {
-                  await NotificationService.instance.cancelEventReminder(updated.id);
-                }
+                await NotificationService.instance.syncEventReminder(updated);
                 
                 navigator.pop(true);
               },

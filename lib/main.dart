@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/theme/app_theme.dart';
@@ -5,6 +7,7 @@ import 'presentation/screens/home_screen.dart';
 import 'core/utils/app_settings.dart';
 import 'l10n/app_localizations.dart';
 import 'core/utils/notification_service.dart';
+import 'data/repositories/local_event_repository.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +17,19 @@ Future<void> main() async {
       child: CoachApp(),
     ),
   );
+  // Fire-and-forget so restoring alarms never delays the first frame.
+  unawaited(_restoreReminders());
+}
+
+/// Reboots clear pending alarms, so rebuild the schedule from stored events on
+/// every launch. Also advances recurring reminders past occurrences that fired.
+Future<void> _restoreReminders() async {
+  try {
+    final events = await LocalEventRepository().getEvents();
+    await NotificationService.instance.syncEventReminders(events);
+  } catch (e) {
+    debugPrint('Reminder restore failed: $e');
+  }
 }
 
 class CoachApp extends ConsumerWidget {
