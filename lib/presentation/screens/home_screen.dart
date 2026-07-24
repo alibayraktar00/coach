@@ -15,6 +15,8 @@ import '../widgets/event_editor_sheet.dart';
 import 'settings_screen.dart';
 import '../../data/models/event_model.dart';
 import '../../core/utils/event_provider.dart';
+import '../../core/utils/app_settings.dart';
+import '../../core/utils/time_format.dart';
 import '../../l10n/app_localizations.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -199,6 +201,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final tags = ref.watch(_searchOpen ? allTagsProvider : availableTagsProvider);
     final visibleEvents = isSearching ? searchResults : filteredEvents;
 
+    final settings = ref.watch(appSettingsProvider).valueOrNull;
+    final weekStartDay = settings?.weekStartDay ?? DateTime.monday;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -293,6 +298,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   const SizedBox(height: 18),
                   FloatingCalendar(
                     initialSelectedDay: selectedDay,
+                    weekStartDay: weekStartDay,
                     onSelectedDayChanged: (d) => ref.read(selectedDayProvider.notifier).state = d,
                   ),
                   const SizedBox(height: 16),
@@ -301,7 +307,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     child: Text(
                       isSearching
                           ? '${searchResults.length} results'
-                          : '${selectedDay.day}/${selectedDay.month}/${selectedDay.year}',
+                          : formatDate(selectedDay),
                       style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white),
                     ),
                   ),

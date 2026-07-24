@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/utils/app_settings.dart';
 import '../../core/utils/glass_morphism.dart';
+import '../../core/utils/time_format.dart';
 import '../../data/models/event_model.dart';
 
-class EventCard extends StatelessWidget {
+class EventCard extends ConsumerWidget {
   final EventModel event;
   final VoidCallback? onTap;
 
   const EventCard({super.key, required this.event, this.onTap});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final chipColor = event.colorValue != null ? Color(event.colorValue!) : null;
+    final use24Hour =
+        ref.watch(appSettingsProvider).valueOrNull?.use24HourFormat ?? true;
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: InkWell(
@@ -51,7 +56,7 @@ class EventCard extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            '${event.dateTime.day}/${event.dateTime.month}/${event.dateTime.year} - ${event.dateTime.hour}:${event.dateTime.minute.toString().padLeft(2, '0')}',
+                            formatDateTime(event.dateTime, use24Hour),
                             style: TextStyle(
                               color: Colors.white.withAlpha((255 * 0.6).toInt()),
                               fontSize: 14,

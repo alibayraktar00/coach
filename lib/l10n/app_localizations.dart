@@ -241,6 +241,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Goal'**
   String get goal;
+
+  /// No description provided for @notSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get notSet;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @timeFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Time format'**
+  String get timeFormat;
+
+  /// No description provided for @hour24.
+  ///
+  /// In en, this message translates to:
+  /// **'24-hour'**
+  String get hour24;
+
+  /// No description provided for @hour12.
+  ///
+  /// In en, this message translates to:
+  /// **'12-hour'**
+  String get hour12;
+
+  /// No description provided for @weekStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Week starts on'**
+  String get weekStart;
+
+  /// No description provided for @monday.
+  ///
+  /// In en, this message translates to:
+  /// **'Monday'**
+  String get monday;
+
+  /// No description provided for @saturday.
+  ///
+  /// In en, this message translates to:
+  /// **'Saturday'**
+  String get saturday;
+
+  /// No description provided for @sunday.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunday'**
+  String get sunday;
 }
 
 class _AppLocalizationsDelegate

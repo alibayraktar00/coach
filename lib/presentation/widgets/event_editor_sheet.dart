@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../l10n/app_localizations.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/utils/app_settings.dart';
 import '../../core/utils/glass_morphism.dart';
+import '../../core/utils/time_format.dart';
 import '../../core/utils/notification_service.dart';
 import '../../core/utils/event_provider.dart';
 import '../../data/models/event_model.dart';
@@ -187,7 +189,10 @@ class _EventEditorSheetState extends ConsumerState<EventEditorSheet> {
                     onPressed: _pickDateTime,
                     icon: const Icon(LucideIcons.calendarClock, color: Colors.white70),
                     label: Text(
-                      '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}  ${_selectedDate.hour.toString().padLeft(2, '0')}:${_selectedDate.minute.toString().padLeft(2, '0')}',
+                      formatDateTime(
+                        _selectedDate,
+                        ref.watch(appSettingsProvider).valueOrNull?.use24HourFormat ?? true,
+                      ),
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),

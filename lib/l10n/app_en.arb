@@ -36,5 +36,16 @@
   "email": "Email",
   "weight": "Weight",
   "height": "Height",
-  "goal": "Goal"
+  "goal": "Goal",
+  "notSet": "Not set",
+  "edit": "Edit",
+  "save": "Save",
+  "cancel": "Cancel",
+  "timeFormat": "Time format",
+  "hour24": "24-hour",
+  "hour12": "12-hour",
+  "weekStart": "Week starts on",
+  "monday": "Monday",
+  "saturday": "Saturday",
+  "sunday": "Sunday"
 }

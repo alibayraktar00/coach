@@ -83,4 +83,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get goal => 'Goal';
+
+  @override
+  String get notSet => 'Not set';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get timeFormat => 'Time format';
+
+  @override
+  String get hour24 => '24-hour';
+
+  @override
+  String get hour12 => '12-hour';
+
+  @override
+  String get weekStart => 'Week starts on';
+
+  @override
+  String get monday => 'Monday';
+
+  @override
+  String get saturday => 'Saturday';
+
+  @override
+  String get sunday => 'Sunday';
 }

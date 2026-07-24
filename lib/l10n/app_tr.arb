@@ -36,5 +36,16 @@
   "email": "E-posta",
   "weight": "Kilo",
   "height": "Boy",
-  "goal": "Hedef"
+  "goal": "Hedef",
+  "notSet": "Belirtilmedi",
+  "edit": "Düzenle",
+  "save": "Kaydet",
+  "cancel": "İptal",
+  "timeFormat": "Saat biçimi",
+  "hour24": "24 saat",
+  "hour12": "12 saat",
+  "weekStart": "Hafta başlangıcı",
+  "monday": "Pazartesi",
+  "saturday": "Cumartesi",
+  "sunday": "Pazar"
 }

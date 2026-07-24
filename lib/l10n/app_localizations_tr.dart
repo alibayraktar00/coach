@@ -83,4 +83,37 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get goal => 'Hedef';
+
+  @override
+  String get notSet => 'Belirtilmedi';
+
+  @override
+  String get edit => 'Düzenle';
+
+  @override
+  String get save => 'Kaydet';
+
+  @override
+  String get cancel => 'İptal';
+
+  @override
+  String get timeFormat => 'Saat biçimi';
+
+  @override
+  String get hour24 => '24 saat';
+
+  @override
+  String get hour12 => '12 saat';
+
+  @override
+  String get weekStart => 'Hafta başlangıcı';
+
+  @override
+  String get monday => 'Pazartesi';
+
+  @override
+  String get saturday => 'Cumartesi';
+
+  @override
+  String get sunday => 'Pazar';
 }

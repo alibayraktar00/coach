@@ -8,10 +8,14 @@ class FloatingCalendar extends StatefulWidget {
     super.key,
     this.onSelectedDayChanged,
     this.initialSelectedDay,
+    this.weekStartDay = DateTime.monday,
   });
 
   final ValueChanged<DateTime>? onSelectedDayChanged;
   final DateTime? initialSelectedDay;
+
+  /// ISO-8601 weekday the grid starts on (1 = Monday, 7 = Sunday).
+  final int weekStartDay;
 
   @override
   State<FloatingCalendar> createState() => _FloatingCalendarState();
@@ -42,6 +46,11 @@ class _FloatingCalendarState extends State<FloatingCalendar> {
           lastDay: DateTime.utc(2030, 12, 31),
           focusedDay: _focusedDay,
           calendarFormat: _calendarFormat,
+          startingDayOfWeek: switch (widget.weekStartDay) {
+            DateTime.saturday => StartingDayOfWeek.saturday,
+            DateTime.sunday => StartingDayOfWeek.sunday,
+            _ => StartingDayOfWeek.monday,
+          },
           selectedDayPredicate: (day) {
             return isSameDay(_selectedDay, day);
           },
