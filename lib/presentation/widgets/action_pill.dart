@@ -36,7 +36,15 @@ class ActionPill extends StatelessWidget {
           children: [
             Icon(icon, size: 18, color: Colors.white),
             const SizedBox(width: 8),
-            Text(label, style: const TextStyle(fontWeight: FontWeight.w700, color: Colors.white)),
+            // Flexible so narrow screens and longer translations don't overflow.
+            Flexible(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.w700, color: Colors.white),
+              ),
+            ),
           ],
         ),
       ),
