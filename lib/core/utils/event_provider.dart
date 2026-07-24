@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../data/models/event_model.dart';
 import '../../data/repositories/local_event_repository.dart';
+import 'recurrence.dart';
 
 final eventRepositoryProvider = Provider((ref) => LocalEventRepository());
 
@@ -124,40 +125,7 @@ List<EventModel> _expandEventsForDay(List<EventModel> base, DateTime day) {
       continue;
     }
 
-    final type = e.recurrenceType;
-    if (type == null) continue;
-    if (day.isBefore(DateTime(e.dateTime.year, e.dateTime.month, e.dateTime.day))) continue;
-    if (e.recurrenceUntil != null && day.isAfter(e.recurrenceUntil!)) continue;
-
-    final interval = (e.recurrenceInterval ?? 1).clamp(1, 365);
-    final start = DateTime(e.dateTime.year, e.dateTime.month, e.dateTime.day);
-    final target = DateTime(day.year, day.month, day.day);
-
-    bool matches = false;
-    switch (type) {
-      case 'daily':
-        matches = target.difference(start).inDays % interval == 0;
-        break;
-      case 'weekly':
-        if (target.weekday == start.weekday) {
-          matches = (target.difference(start).inDays ~/ 7) % interval == 0;
-        }
-        break;
-      case 'monthly':
-        if (target.day == start.day) {
-          final months = (target.year - start.year) * 12 + (target.month - start.month);
-          matches = months >= 0 && months % interval == 0;
-        }
-        break;
-      case 'yearly':
-        if (target.day == start.day && target.month == start.month) {
-          final years = target.year - start.year;
-          matches = years >= 0 && years % interval == 0;
-        }
-        break;
-    }
-
-    if (matches) {
+    if (occursOn(e, day)) {
       result.add(
         EventModel(
           id: e.id,
