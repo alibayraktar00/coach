@@ -5,9 +5,9 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- Needed to re-arm reminders after the device reboots. -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Reminders must fire at a precise time; Android 12+ gates exact alarms. -->
+    <!-- Reminders must fire at a precise time; Android 12+ gates exact alarms.
+         User-grantable only, so exact delivery depends on the user allowing it. -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <application
         android:label="coach"
         android:name="${applicationName}"
